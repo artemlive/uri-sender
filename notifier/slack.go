@@ -7,13 +7,11 @@ import (
 )
 import "github.com/slack-go/slack"
 
-
 type Slack struct {
-	authToken	string
+	authToken  string
 	message    Message
 	recipients []string
 }
-
 
 func NewSlackNotifier(message Message, recipients []string, conf config.Config) (*Slack, error) {
 	if len(recipients) == 0 {

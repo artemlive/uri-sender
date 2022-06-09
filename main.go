@@ -9,13 +9,12 @@ import (
 	"strings"
 )
 
-
 var (
 	logLevel   = kingpin.Flag("logLevel", "Log level").Default("info").String()
-	configPath   = kingpin.Flag("config", "Path to a config file").Default("config.json").Short('c').Envar("CONFIG_PATH").String()
+	configPath = kingpin.Flag("config", "Path to a config file").Default("config.json").Short('c').Envar("CONFIG_PATH").String()
 )
 
-func main(){
+func main() {
 	kingpin.Parse()
 	setLogLevel()
 	creator := notifier.NewCreator()
@@ -38,7 +37,7 @@ func main(){
 	}
 }
 
-func setLogLevel(){
+func setLogLevel() {
 	level := zerolog.InfoLevel
 	switch *logLevel {
 	case "debug":

@@ -12,21 +12,20 @@ const (
 	slackAuthTokenEnvName = "SLACK_AUTH_TOKEN"
 )
 
-
 type Credentials struct {
-	SlackApiToken	string `json:"slack_api_token"`
+	SlackApiToken string `json:"slack_api_token"`
 }
 
 type Config struct {
 	credentials Credentials
-	Notifiers []struct {
+	Notifiers   []struct {
 		Type       string   `json:"type"`
 		Recipients []string `json:"recipients"`
 		Message    string   `json:"message"`
 	} `json:"notifiers"`
 }
 
-func NewConfig (path string) (*Config, error) {
+func NewConfig(path string) (*Config, error) {
 	file, err := ioutil.ReadFile(path)
 	if err != nil {
 		return &Config{}, err
@@ -37,7 +36,7 @@ func NewConfig (path string) (*Config, error) {
 	return &config, err
 }
 
-func (c *Config) GetSlackApiToken() (string, error){
+func (c *Config) GetSlackApiToken() (string, error) {
 	if len(c.credentials.SlackApiToken) > 0 {
 		log.Debug().Msgf("Found the SLACK API token in the config file, let's using it")
 		return c.credentials.SlackApiToken, nil

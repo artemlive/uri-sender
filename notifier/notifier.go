@@ -8,10 +8,10 @@ import (
 type Action string
 
 type Message struct {
-	Title	string
+	Title    string
 	Template string
-	Message string
-	File	string
+	Message  string
+	File     string
 }
 
 const (
@@ -39,13 +39,16 @@ func (c *NotificatorCreator) CreateNotifier(action Action, message Message, reci
 	switch action {
 	case SLACK:
 		notifier, err = NewSlackNotifier(message, recipients, conf)
-		if err != nil {return nil, err}
+		if err != nil {
+			return nil, err
+		}
 	case EMAIL:
 		notifier, err = NewEmailNotifier(message, recipients)
-		if err != nil {return nil, err}
+		if err != nil {
+			return nil, err
+		}
 	default:
 		log.Fatal().Msgf("Unknown Notification method \"%s\"", action)
 	}
 	return notifier, nil
 }
-

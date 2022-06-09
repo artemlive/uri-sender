@@ -10,7 +10,7 @@ import (
 )
 
 // elementScreenshot takes a screenshot of a specific element.
-func elementScreenshot(urlStr, sel string, delay time.Duration,res *[]byte) chromedp.Tasks {
+func elementScreenshot(urlStr, sel string, delay time.Duration, res *[]byte) chromedp.Tasks {
 	return chromedp.Tasks{
 		chromedp.Navigate(urlStr),
 		chromedp.Sleep(delay * time.Second),
@@ -18,10 +18,10 @@ func elementScreenshot(urlStr, sel string, delay time.Duration,res *[]byte) chro
 	}
 }
 
-func MakeScreenshot(url, htmlElement, outPath string, delay time.Duration, level zerolog.Level) error{
+func MakeScreenshot(url, htmlElement, outPath string, delay time.Duration, level zerolog.Level) error {
 	// create context with debug if needed
 	ctx := context.Background()
-	cancel := func(){}
+	cancel := func() {}
 	if level == zerolog.DebugLevel {
 		ctx, cancel = chromedp.NewContext(
 			context.Background(),
