@@ -24,10 +24,12 @@ func NewSlackNotifier(message Message, recipients []string, conf config.Config) 
 	return &Slack{authToken: token, message: message, recipients: recipients}, nil
 }
 func (s *Slack) Send() error {
-	fmt.Println(s.message)
+	log.Debug().Msgf("Message: %+v", s.message)
 	err := s.sendMessage()
 	return err
 }
+
+
 
 func (s *Slack) sendMessage() error {
 	api := slack.New(s.authToken)

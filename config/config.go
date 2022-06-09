@@ -6,6 +6,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"io/ioutil"
 	"os"
+	"time"
 )
 
 const (
@@ -16,13 +17,21 @@ type Credentials struct {
 	SlackApiToken string `json:"slack_api_token"`
 }
 
+type Screenshot struct {
+	URL         string        `json:"url"`
+	HTMLElement string        `json:"htmlElement"`
+	Wait        time.Duration `json:"wait"`
+	OutPath     string        `json:"outPath"`
+}
+
 type Config struct {
 	credentials Credentials
 	Notifiers   []struct {
-		Type       string   `json:"type"`
-		Recipients []string `json:"recipients"`
-		Message    string   `json:"message"`
-		Cron       string   `json:"cron"`
+		Type       string     `json:"type"`
+		Recipients []string   `json:"recipients"`
+		Message    string     `json:"message"`
+		Cron       string     `json:"cron"`
+		ScreenShot Screenshot `json:"screenshot"`
 	} `json:"notifiers"`
 }
 

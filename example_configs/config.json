@@ -1,16 +1,18 @@
 {
   "notifiers": [
     {
+
+      "type": "slack",
+      "recipients": ["@test"],
+      "message": "<https://example.com|hello>",
+      "slack_api_key": "",
+      "cron": "*/1 * * * *",
       "screenshot": {
         "url": "https://example.com",
         "htmlElement": "div#report",
-        "wait": 10
-      },
-      "type": "slack",
-      "recipients": ["@test"],
-      "message": "Hello man",
-      "slack_api_key": "",
-      "cron": "*/1 * * * *"
+        "wait": 10,
+        "outPath": ".test/screenshots"
+      }
     }
   ]
 }
