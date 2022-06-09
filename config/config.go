@@ -22,6 +22,7 @@ type Config struct {
 		Type       string   `json:"type"`
 		Recipients []string `json:"recipients"`
 		Message    string   `json:"message"`
+		Cron	string		`json:"cron"`
 	} `json:"notifiers"`
 }
 
@@ -30,7 +31,7 @@ func NewConfig(path string) (*Config, error) {
 	if err != nil {
 		return &Config{}, err
 	}
-
+	// TODO: add config validator, e.g. cron syntax, etc
 	config := Config{}
 	err = json.Unmarshal(file, &config)
 	return &config, err

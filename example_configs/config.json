@@ -9,7 +9,8 @@
       "type": "slack",
       "recipients": ["@test"],
       "message": "Hello man",
-      "slack_api_key": ""
+      "slack_api_key": "",
+      "cron": "*/1 * * * *"
     }
   ]
 }
