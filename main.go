@@ -48,7 +48,7 @@ func main() {
 
 }
 
-func test(){
+func test() {
 	log.Info().Msg("TEST")
 }
 func setLogLevel() {

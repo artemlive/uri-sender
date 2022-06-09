@@ -22,7 +22,7 @@ type Config struct {
 		Type       string   `json:"type"`
 		Recipients []string `json:"recipients"`
 		Message    string   `json:"message"`
-		Cron	string		`json:"cron"`
+		Cron       string   `json:"cron"`
 	} `json:"notifiers"`
 }
 
