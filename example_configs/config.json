@@ -1,0 +1,15 @@
+{
+  "notifiers": [
+    {
+      "screenshot": {
+        "url": "https://example.com",
+        "htmlElement": "div#report",
+        "wait": 10
+      },
+      "type": "slack",
+      "recipients": ["@test"],
+      "message": "Hello man",
+      "slack_api_key": ""
+    }
+  ]
+}
