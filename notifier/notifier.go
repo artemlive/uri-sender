@@ -50,6 +50,6 @@ func (c *NotificatorCreator) CreateNotifier(action Action, message Message, reci
 	default:
 		log.Fatal().Msgf("Unknown Notification method \"%s\"", action)
 	}
-	log.Debug().Msgf("%s notifier has successfully been created")
+	log.Debug().Msgf("%s notifier has successfully been created", action)
 	return notifier, nil
 }
