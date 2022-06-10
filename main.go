@@ -38,7 +38,7 @@ func main() {
 		if len(notify.ScreenShot.URL) > 0 {
 			filePath, err = screenshoter.MakeScreenshot(ctx, notify.ScreenShot.URL, notify.ScreenShot.HTMLElement, notify.ScreenShot.OutPath, notify.ScreenShot.Wait, *debugChromeDP)
 			if err != nil {
-				log.Error().Msgf("Couldn't make a screenshot '%s': %s", notify.Type, err)
+				log.Error().Msgf("Couldn't make a screenshot '%s': %s, check the htmlElement property", notify.Type, err)
 			}
 		}
 		s := gocron.NewScheduler(time.UTC)
