@@ -1,5 +1,5 @@
 # uri-sender
-A simple basic application that can send screenshots of URIs by schedule 
+A simple basic application that can send screenshots of URIs to Slack by schedule 
 
 ## Usage
 Here is the example config for uri-sender. 
