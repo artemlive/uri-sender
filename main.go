@@ -15,6 +15,8 @@ import (
 
 var (
 	logLevel   = kingpin.Flag("logLevel", "Log level").Default("info").Short('l').String()
+	// I created another one flag to turn on the chromedp debug separately, cause it generates insane amount of messages
+	debugChromeDP   = kingpin.Flag("dpDebug", "Turn on ChromeDP debug").Default("false").Short('d').Bool()
 	configPath = kingpin.Flag("config", "Path to a config file").Default("config.json").Short('c').Envar("CONFIG_PATH").String()
 )
 
@@ -27,14 +29,14 @@ func main() {
 	if err != nil {
 		log.Fatal().Msgf("Couldn't read config %s, %s", *configPath, err)
 	}
-
+	log.Debug().Msgf("Successfully read the config file from %s", *configPath)
 	// Read all notifiers and run the via scheduler
 	// TODO: create a manager for this code
 	for _, notify := range cfg.Notifiers {
 
 		filePath := ""
 		if len(notify.ScreenShot.URL) > 0 {
-			filePath, err = screenshoter.MakeScreenshot(ctx, notify.ScreenShot.URL, notify.ScreenShot.HTMLElement, notify.ScreenShot.OutPath, notify.ScreenShot.Wait, getLogLevel())
+			filePath, err = screenshoter.MakeScreenshot(ctx, notify.ScreenShot.URL, notify.ScreenShot.HTMLElement, notify.ScreenShot.OutPath, notify.ScreenShot.Wait, *debugChromeDP)
 			if err != nil {
 				log.Error().Msgf("Couldn't make a screenshot '%s': %s", notify.Type, err)
 			}
