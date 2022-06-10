@@ -33,7 +33,7 @@ func MakeScreenshot(ctxParent context.Context, url, htmlElement, outPath string,
 	timeout := delay*contextWaitCoefficient*time.Second
 	// create context with debug if needed
 	ctxTimeout, cancel := context.WithTimeout(ctxParent, timeout)
-	log.Debug().Msgf("Created context with the timeout: %d", timeout.String())
+	log.Debug().Msgf("Created context with the timeout: %s", timeout.String())
 	ctx, cancel := chromedp.NewContext(
 		ctxTimeout,
 	)
@@ -69,6 +69,6 @@ func MakeScreenshot(ctxParent context.Context, url, htmlElement, outPath string,
 		return "", err
 	}
 	log.Debug().Msgf("screenshot file has successfully been written: %s", outFile)
-	
+
 	return outFile, nil
 }
