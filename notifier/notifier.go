@@ -20,7 +20,7 @@ const (
 )
 
 type Creator interface {
-	CreateNotifier(action Action, message Message, recipients []string) (*Notifier, error)
+	CreateNotifier(action Action, message Message, recipients []string, conf config.Config) (Notifier, error)
 }
 
 type Notifier interface {

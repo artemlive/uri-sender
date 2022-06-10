@@ -24,15 +24,17 @@ type Screenshot struct {
 	OutPath     string        `json:"outPath"`
 }
 
+type Notifier struct {
+	Type       string     `json:"type"`
+	Recipients []string   `json:"recipients"`
+	Message    string     `json:"message"`
+	Cron       string     `json:"cron"`
+	ScreenShot Screenshot `json:"screenshot"`
+}
+
 type Config struct {
 	credentials Credentials
-	Notifiers   []struct {
-		Type       string     `json:"type"`
-		Recipients []string   `json:"recipients"`
-		Message    string     `json:"message"`
-		Cron       string     `json:"cron"`
-		ScreenShot Screenshot `json:"screenshot"`
-	} `json:"notifiers"`
+	Notifiers   []Notifier `json:"notifiers"`
 }
 
 func NewConfig(path string) (*Config, error) {

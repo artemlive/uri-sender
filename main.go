@@ -33,28 +33,16 @@ func main() {
 	// Read all notifiers and run the via scheduler
 	// TODO: create a manager for this code
 	for _, notify := range cfg.Notifiers {
-
-		filePath := ""
-		if len(notify.ScreenShot.URL) > 0 {
-			filePath, err = screenshoter.MakeScreenshot(ctx, notify.ScreenShot.URL, notify.ScreenShot.HTMLElement, notify.ScreenShot.OutPath, notify.ScreenShot.Wait, *debugChromeDP)
-			if err != nil {
-				log.Error().Msgf("Couldn't make a screenshot '%s': %s, check the htmlElement property", notify.Type, err)
-			}
-		}
 		s := gocron.NewScheduler(time.UTC)
-
-		notificator, err := creator.CreateNotifier(notifier.Action(strings.ToUpper(notify.Type)), notifier.Message{Message: notify.Message, File: filePath}, notify.Recipients, *cfg)
+		_, err = s.Cron(notify.Cron).Do(ScreenshotAndNotify, ctx, notify, creator, *cfg)
 		if err != nil {
-			log.Error().Msgf("Couldn't initialize notificator '%s': %s", notify.Type, err)
+			log.Fatal().Msgf("Couldn't init cron '%s' %s", notify.Type, err)
 			return
 		}
-		_, err = s.Cron(notify.Cron).Do(notificator.Send)
-		if err != nil {
-			log.Fatal().Msgf("Couldn't send message via '%s' %s", notify.Type, err)
-			return
-		}
+		log.Debug().Msgf("Cron has been initialized: %s", notify.Cron)
 		s.StartAsync()
 	}
+
 	// infinite loop for scheduler
 	for {
 		time.Sleep(1 * time.Second)
@@ -62,8 +50,27 @@ func main() {
 
 }
 
-func test() {
-	log.Info().Msg("TEST")
+func ScreenshotAndNotify(ctx context.Context, notify config.Notifier, creator notifier.Creator, cfg config.Config){
+	filePath := ""
+	var err error
+	if len(notify.ScreenShot.URL) > 0 {
+		filePath, err = screenshoter.MakeScreenshot(ctx, notify.ScreenShot.URL, notify.ScreenShot.HTMLElement, notify.ScreenShot.OutPath, notify.ScreenShot.Wait, *debugChromeDP)
+		if err != nil {
+			log.Error().Msgf("Couldn't make a screenshot '%s': %s, check the htmlElement property", notify.Type, err)
+		}
+	}
+
+	notificator, err := creator.CreateNotifier(notifier.Action(strings.ToUpper(notify.Type)), notifier.Message{Message: notify.Message, File: filePath}, notify.Recipients, cfg)
+	if err != nil {
+		log.Error().Msgf("Couldn't initialize notificator '%s': %s", notify.Type, err)
+		return
+	}
+	notificator.Send()
+	if err != nil {
+		log.Fatal().Msgf("Couldn't send message via '%s' %s", notify.Type, err)
+		return
+	}
+
 }
 
 func setLogLevel() {
