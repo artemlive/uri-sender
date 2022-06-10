@@ -65,13 +65,7 @@ func test() {
 }
 
 func setLogLevel() {
-	level := zerolog.InfoLevel
-	switch *logLevel {
-	case "debug":
-		level = zerolog.DebugLevel
-	case "error":
-		level = zerolog.ErrorLevel
-	}
+	level := getLogLevel()
 	zerolog.SetGlobalLevel(level)
 }
 
